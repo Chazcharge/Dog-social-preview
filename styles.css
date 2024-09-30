@@ -45,3 +45,33 @@ footer {
     bottom: 0;
     width: 100%;
 }
+#feed {
+    padding: 20px;
+}
+
+.post {
+    background-color: white;
+    margin: 20px 0;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+}
+
+.post-header img {
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.post-content img {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.post-actions {
+    margin-top: 10px;
+}
