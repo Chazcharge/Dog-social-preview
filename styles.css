@@ -75,3 +75,29 @@ footer {
 .post-actions {
     margin-top: 10px;
 }
+#profile {
+    padding: 20px;
+}
+
+.profile-header {
+    text-align: center;
+}
+
+.profile-header img {
+    border-radius: 50%;
+}
+
+.profile-bio {
+    margin: 20px 0;
+}
+
+.profile-posts {
+    margin-top: 20px;
+}
+
+.profile-posts .post {
+    background-color: white;
+    margin-bottom: 15px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
