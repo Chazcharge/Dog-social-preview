@@ -55,5 +55,29 @@
     <footer>
         <p>© 2024 Dog Social Media</p>
     </footer>
+    <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const postText = document.getElementById('post-text').value;
+        const postSection = document.getElementById('feed');
+
+        // Simulate adding a new post to the feed
+        const newPost = `
+            <div class="post">
+                <div class="post-header">
+                    <h3>Your Dog</h3>
+                </div>
+                <div class="post-content">
+                    <p>${postText}</p>
+                </div>
+            </div>
+        `;
+        postSection.innerHTML += newPost;
+
+        // Clear the form
+        document.getElementById('post-text').value = '';
+    });
+</script>
+
 </body>
 </html>
