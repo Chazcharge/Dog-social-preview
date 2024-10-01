@@ -9,51 +9,34 @@
 <body>
     <header>
         <h1>Dog Social Feed</h1>
-       <nav>
-    <a href="index.html">Home</a>
-    <a href="feed.html">Feed</a>
-    <a href="profile.html">Profile</a>
-</nav>
-
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="feed.html">Feed</a>
+            <a href="profile.html">Profile</a>
+        </nav>
     </header>
-    <section id="create-post">
-    <h2>Create a New Post</h2>
-    <form>
-        <label for="post-text">Post Description:</label>
-        <textarea id="post-text" name="post-text" rows="4" cols="50" placeholder="What's on your dog's mind?"></textarea>
-        <br><br>
-        <label for="post-image">Upload Image:</label>
-        <input type="file" id="post-image" name="post-image">
-        <br><br>
-        <button type="submit">Submit Post</button>
-    </form>
-</section>
-
-
-   <section id="feed">
-    <h2>Latest Dog Posts</h2>
     
-    <!-- Example of a post -->
-    <div class="post">
-        <div class="post-header">
-            <img src="https://via.placeholder.com/50" alt="Dog Profile Pic">
-            <h3>Dog Name</h3>
-        </div>
-        <div class="post-content">
-            <img src="https://via.placeholder.com/300" alt="Dog Post Image">
-            <p>Dog description and story goes here.</p>
-        </div>
-        <div class="post-actions">
-            <button>Like</button>
-            <button>Comment</button>
-        </div>
-    </div>
-</section>
+    <section id="create-post">
+        <h2>Create a New Post</h2>
+        <form>
+            <label for="post-text">Post Description:</label>
+            <textarea id="post-text" name="post-text" rows="4" cols="50" placeholder="What's on your dog's mind?"></textarea>
+            <br><br>
+            <label for="post-image">Upload Image:</label>
+            <input type="file" id="post-image" name="post-image">
+            <br><br>
+            <button type="submit">Submit Post</button>
+        </form>
+    </section>
 
+    <section id="feed">
+        <h2>Latest Dog Posts</h2>
+    </section>
 
     <footer>
         <p>© 2024 Dog Social Media</p>
     </footer>
+
 <script>
     document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -66,13 +49,22 @@
         const newPost = document.createElement('div');
         newPost.classList.add('post');
         
-        // Create the post content
+        // Create the post content with like and comment sections
         const postHeader = `
             <div class="post-header">
                 <h3>Your Dog</h3>
             </div>
             <div class="post-content">
                 <p>${postText}</p>
+            </div>
+            <div class="post-actions">
+                <button class="like-button">Like</button>
+                <span class="likes-count">0</span> Likes
+            </div>
+            <div class="comment-section">
+                <textarea class="comment-input" placeholder="Add a comment"></textarea>
+                <button class="submit-comment">Submit Comment</button>
+                <div class="comments"></div>
             </div>
         `;
         
@@ -94,57 +86,35 @@
         document.getElementById('post-text').value = '';
         document.getElementById('post-image').value = '';
     });
-    // Function to handle Like button click
-document.getElementById('feed').addEventListener('click', function(event) {
-    if (event.target.classList.contains('like-button')) {
-        let likesCount = event.target.nextElementSibling;
-        let currentLikes = parseInt(likesCount.textContent);
-        likesCount.textContent = currentLikes + 1;
-    }
-    const postHeader = `
-    <div class="post-header">
-        <h3>Your Dog</h3>
-    </div>
-    <div class="post-content">
-        <p>${postText}</p>
-    </div>
-    <div class="post-actions">
-        <button class="like-button">Like</button>
-        <span class="likes-count">0</span> Likes
-    </div>
-`;
-const postHeader = `
-    <div class="post-header">
-        <h3>Your Dog</h3>
-    </div>
-    <div class="post-content">
-        <p>${postText}</p>
-    </div>
-    <div class="post-actions">
-        <button class="like-button">Like</button>
-        <span class="likes-count">0</span> Likes
-    </div>
-    <div class="comment-section">
-        <textarea class="comment-input" placeholder="Add a comment"></textarea>
-        <button class="submit-comment">Submit Comment</button>
-        <div class="comments"></div>
-    </div>
-`;
-document.getElementById('feed').addEventListener('click', function(event) {
-    if (event.target.classList.contains('submit-comment')) {
-        const commentInput = event.target.previousElementSibling;
-        const commentText = commentInput.value;
-        if (commentText) {
-            const commentsContainer = event.target.nextElementSibling;
-            const newComment = document.createElement('p');
-            newComment.textContent = commentText;
-            commentsContainer.appendChild(newComment);
-            commentInput.value = ''; // Clear the comment input
-        }
-    }
-});
 
+    // Function to handle Like button click
+    document.getElementById('feed').addEventListener('click', function(event) {
+        if (event.target.classList.contains('like-button')) {
+            let likesCount = event.target.nextElementSibling;
+            let currentLikes = parseInt(likesCount.textContent);
+            likesCount.textContent = currentLikes + 1;
+        }
+    });
+
+    // Function to handle Comment submission
+    document.getElementById('feed').addEventListener('click', function(event) {
+        if (event.target.classList.contains('submit-comment')) {
+            const commentInput = event.target.previousElementSibling;
+            const commentText = commentInput.value;
+            if (commentText) {
+                const commentsContainer = event.target.nextElementSibling;
+                const newComment = document.createElement('p');
+                newComment.textContent = commentText;
+                commentsContainer.appendChild(newComment);
+                commentInput.value = ''; // Clear the comment input
+            }
+        }
+    });
 </script>
+
+</body>
+</html>
+
 
 
 </body>
