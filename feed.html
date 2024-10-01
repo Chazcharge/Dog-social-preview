@@ -22,9 +22,6 @@
             <label for="post-text">Post Description:</label>
             <textarea id="post-text" name="post-text" rows="4" cols="50" placeholder="What's on your dog's mind?"></textarea>
             <br><br>
-            <label for="post-image">Upload Image:</label>
-            <input type="file" id="post-image" name="post-image">
-            <br><br>
             <button type="submit">Submit Post</button>
         </form>
     </section>
@@ -42,27 +39,27 @@
 <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
 
 <script>
-    // Your Firebase configuration
-  const firebaseConfig = {
-  apiKey: "AIzaSyBurz5XZJJ0g-AKMUlyl-G8GU-V5qguQvY",
-  authDomain: "dog-social-platform-faf10.firebaseapp.com",
-  projectId: "dog-social-platform-faf10",
-  storageBucket: "dog-social-platform-faf10.appspot.com",
-  messagingSenderId: "836441970732",
-  appId: "1:836441970732:web:1483ccb95d3da6b6891989"
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBurz5XZJJ0g-AKMUlyl-G8GU-V5qguQvY",
+        authDomain: "dog-social-platform-faf10.firebaseapp.com",
+        projectId: "dog-social-platform-faf10",
+        storageBucket: "dog-social-platform-faf10.appspot.com",
+        messagingSenderId: "836441970732",
+        appId: "1:836441970732:web:1483ccb95d3da6b6891989"
     };
 
     // Initialize Firebase and Firestore
     const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Form submission event with console logging for debugging
+    // Form submission event
     document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         
         const postText = document.getElementById('post-text').value;
 
-        console.log('Submitting post:', postText); // Debugging: log the post text
+        console.log('Submitting post:', postText); // Debugging log
 
         // Store post in Firestore
         db.collection("posts").add({
@@ -76,7 +73,6 @@
 
         // Clear form
         document.getElementById('post-text').value = '';
-        document.getElementById('post-image').value = '';
     });
 
     // Load posts when the page loads
@@ -84,8 +80,8 @@
         const postSection = document.getElementById('feed');
         postSection.innerHTML = ''; // Clear existing posts
 
-        console.log('Loading posts...'); // Debugging: log when posts are loading
-        
+        console.log('Loading posts...'); // Debugging log
+
         snapshot.forEach((doc) => {
             const post = doc.data();
             const newPost = document.createElement('div');
