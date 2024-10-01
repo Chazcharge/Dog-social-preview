@@ -37,78 +37,67 @@
         <p>© 2024 Dog Social Media</p>
     </footer>
 
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+
 <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyA7omTU7wBgYlzJldAIqocByx1W9Sg3WMg",
+        authDomain: "dog-social-platform.firebaseapp.com",
+        projectId: "dog-social-platform",
+        storageBucket: "dog-social-platform.appspot.com",
+        messagingSenderId: "961133710470",
+        appId: "1:961133710470:web:406e8247a0e2e3f75d9507"
+    };
+
+    // Initialize Firebase and Firestore
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Form submission event
     document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         
         const postText = document.getElementById('post-text').value;
-        const postImage = document.getElementById('post-image').files[0];
-        const postSection = document.getElementById('feed');
-        
-        // Create a new div for the post
-        const newPost = document.createElement('div');
-        newPost.classList.add('post');
-        
-        // Create the post content with like and comment sections
-        let postHeader = `
-            <div class="post-header">
-                <h3>Your Dog</h3>
-            </div>
-            <div class="post-content">
-                <p>${postText}</p>
-            </div>
-            <div class="post-actions">
-                <button class="like-button">Like</button>
-                <span class="likes-count">0</span> Likes
-            </div>
-            <div class="comment-section">
-                <textarea class="comment-input" placeholder="Add a comment"></textarea>
-                <button class="submit-comment">Submit Comment</button>
-                <div class="comments"></div>
-            </div>
-        `;
-        
-        newPost.innerHTML = postHeader;
 
-        // If an image is uploaded, display it
-        if (postImage) {
-            const imgElement = document.createElement('img');
-            imgElement.src = URL.createObjectURL(postImage); // Temporary URL for image preview
-            imgElement.style.maxWidth = '100%';
-            imgElement.style.marginTop = '10px';
-            newPost.querySelector('.post-content').appendChild(imgElement);
-        }
-        
-        // Add the new post to the feed
-        postSection.appendChild(newPost);
-        
-        // Clear the form fields
+        // Store post in Firestore
+        db.collection("posts").add({
+            text: postText,
+            createdAt: new Date()
+        }).then((docRef) => {
+            console.log("Post added with ID: ", docRef.id);
+        }).catch((error) => {
+            console.error("Error adding post: ", error);
+        });
+
+        // Clear form
         document.getElementById('post-text').value = '';
         document.getElementById('post-image').value = '';
     });
 
-    // Handle Like button clicks
-    document.getElementById('feed').addEventListener('click', function(event) {
-        if (event.target.classList.contains('like-button')) {
-            let likesCount = event.target.nextElementSibling;
-            let currentLikes = parseInt(likesCount.textContent);
-            likesCount.textContent = currentLikes + 1;
-        }
-    });
-
-    // Handle Comment submission
-    document.getElementById('feed').addEventListener('click', function(event) {
-        if (event.target.classList.contains('submit-comment')) {
-            const commentInput = event.target.previousElementSibling;
-            const commentText = commentInput.value;
-            if (commentText) {
-                const commentsContainer = event.target.nextElementSibling;
-                const newComment = document.createElement('p');
-                newComment.textContent = commentText;
-                commentsContainer.appendChild(newComment);
-                commentInput.value = ''; // Clear the comment input
-            }
-        }
+    // Load posts when the page loads
+    db.collection("posts").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+        const postSection = document.getElementById('feed');
+        postSection.innerHTML = ''; // Clear existing posts
+        
+        snapshot.forEach((doc) => {
+            const post = doc.data();
+            const newPost = document.createElement('div');
+            newPost.classList.add('post');
+            
+            newPost.innerHTML = `
+                <div class="post-header">
+                    <h3>Your Dog</h3>
+                </div>
+                <div class="post-content">
+                    <p>${post.text}</p>
+                </div>
+            `;
+            
+            postSection.appendChild(newPost);
+        });
     });
 </script>
 
