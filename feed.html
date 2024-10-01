@@ -94,6 +94,15 @@
         document.getElementById('post-text').value = '';
         document.getElementById('post-image').value = '';
     });
+    // Function to handle Like button click
+document.getElementById('feed').addEventListener('click', function(event) {
+    if (event.target.classList.contains('like-button')) {
+        let likesCount = event.target.nextElementSibling;
+        let currentLikes = parseInt(likesCount.textContent);
+        likesCount.textContent = currentLikes + 1;
+    }
+});
+
 </script>
 
 
