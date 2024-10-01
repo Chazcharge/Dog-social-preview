@@ -54,29 +54,48 @@
     <footer>
         <p>© 2024 Dog Social Media</p>
     </footer>
-    <script>
+<script>
     document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
+        
         const postText = document.getElementById('post-text').value;
+        const postImage = document.getElementById('post-image').files[0];
         const postSection = document.getElementById('feed');
-
-        // Simulate adding a new post to the feed
-        const newPost = `
-            <div class="post">
-                <div class="post-header">
-                    <h3>Your Dog</h3>
-                </div>
-                <div class="post-content">
-                    <p>${postText}</p>
-                </div>
+        
+        // Create a new div for the post
+        const newPost = document.createElement('div');
+        newPost.classList.add('post');
+        
+        // Create the post content
+        const postHeader = `
+            <div class="post-header">
+                <h3>Your Dog</h3>
+            </div>
+            <div class="post-content">
+                <p>${postText}</p>
             </div>
         `;
-        postSection.innerHTML += newPost;
-
+        
+        newPost.innerHTML = postHeader;
+        
+        // If an image is uploaded, display it
+        if (postImage) {
+            const imgElement = document.createElement('img');
+            imgElement.src = URL.createObjectURL(postImage); // Temporary URL for image preview
+            imgElement.style.maxWidth = '100%';
+            imgElement.style.marginTop = '10px';
+            newPost.querySelector('.post-content').appendChild(imgElement);
+        }
+        
+        // Add the new post to the feed
+        postSection.appendChild(newPost);
+        
         // Clear the form
         document.getElementById('post-text').value = '';
+        document.getElementById('post-image').value = '';
     });
 </script>
+
 
 </body>
 </html>
