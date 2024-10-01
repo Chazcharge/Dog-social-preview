@@ -101,6 +101,47 @@ document.getElementById('feed').addEventListener('click', function(event) {
         let currentLikes = parseInt(likesCount.textContent);
         likesCount.textContent = currentLikes + 1;
     }
+    const postHeader = `
+    <div class="post-header">
+        <h3>Your Dog</h3>
+    </div>
+    <div class="post-content">
+        <p>${postText}</p>
+    </div>
+    <div class="post-actions">
+        <button class="like-button">Like</button>
+        <span class="likes-count">0</span> Likes
+    </div>
+`;
+const postHeader = `
+    <div class="post-header">
+        <h3>Your Dog</h3>
+    </div>
+    <div class="post-content">
+        <p>${postText}</p>
+    </div>
+    <div class="post-actions">
+        <button class="like-button">Like</button>
+        <span class="likes-count">0</span> Likes
+    </div>
+    <div class="comment-section">
+        <textarea class="comment-input" placeholder="Add a comment"></textarea>
+        <button class="submit-comment">Submit Comment</button>
+        <div class="comments"></div>
+    </div>
+`;
+document.getElementById('feed').addEventListener('click', function(event) {
+    if (event.target.classList.contains('submit-comment')) {
+        const commentInput = event.target.previousElementSibling;
+        const commentText = commentInput.value;
+        if (commentText) {
+            const commentsContainer = event.target.nextElementSibling;
+            const newComment = document.createElement('p');
+            newComment.textContent = commentText;
+            commentsContainer.appendChild(newComment);
+            commentInput.value = ''; // Clear the comment input
+        }
+    }
 });
 
 </script>
